@@ -92,7 +92,7 @@ for x in res:
 
 
 ## インストール
-
+- [Y-Github][Y-Github]のリポジトリに、インストール手順を記載しているため、そちらを参照されたい。
 
 
 [Y-Github]:https://yghe.amzn.ykgw.net/denovo/denovoutil
