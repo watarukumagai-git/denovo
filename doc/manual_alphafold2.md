@@ -11,7 +11,7 @@
 - colabfold
 
 ## ColabFoldの使い方
-- alphafold白書を参照されたい。
+- alphafold白書を参照されたい。https://www.af2anatomia.jp/
 - step1: GoogleColaboratoryを開く。
 - step2: アミノ酸配列の入力や設定をする。
 - step3: 実行する。
