@@ -26,7 +26,7 @@ mpiexec.add_node('enzcpu05', 48)
 ```
 
 ### PDB
-- pdbデータのparseや保存が可能。
+- pdbデータのparseが可能。
 ```
 import denovoutil.rosetta.pdb as PDB
 m2 = PDB.parse('2cbh.pdb')
@@ -46,7 +46,7 @@ sc2 = scorer.run(m2, 'ref2015_cart')
 ```
 
 ### Relax
-- relax計算を実行し、その構造とスコアを得る。
+- parseしたpdbデータについて、relax計算を実行し、その構造とスコアを得る。
 ```
 from denovoutil.common import mpiexecutor
 import denovoutil.rosetta.pdb as PDB
@@ -64,7 +64,7 @@ models, scores = relax.run(m1, nstruct)
 ```
 
 ### CartDDG
-- cartesian_ddgを実行し、そのスコアを得る。
+- parseしたpdbデータについて、cartesian_ddgを実行し、そのスコアを得る。
 ```
 from denovoutil.common import mpiexecutor
 import denovoutil.rosetta.pdb as PDB
@@ -75,7 +75,6 @@ mpiexec.add_node('enzcpu04', 48)
 mpiexec.add_node('enzcpu05', 48)
 
 m1 = PDB.parse('sample/1cbh.pdb')
-m2 = PDB.parse('sample/2cbh.pdb')
 
 ddg = CartesianDDG.create(mpiexec=mpiexec)
 # 変異位置・種類、iterationを指定
@@ -83,7 +82,12 @@ res = ddg.run_batch(m1[0], '1A', ddg_iteration=1)
 
 for x in res:
     ret = (x.basename, x.mutation, str(x.ddg))
-    print(ret)
+    # x.basename: 
+    # x.mutation: 
+    # x.ddg: ddg score
+    # x.mutant_score: mutant rosetta score("ref2015_cart")
+    # x.mutant_models: mutant model
+    # x.mutant_model.save(pdbfile + '.pdb'): save to pdb file
 ```
 
 
