@@ -8,11 +8,25 @@
 
 ## 構成
 - 主に下記4種類のラッパーライブラリが用意されている。
-    - Scorer：スコア計算周り
     - MPIExecutor：MPI実行周り
+    - Scorer：スコア計算周り
     - CartDDG：cartesian_ddg周り
     - Relax：relax計算周り
+- [Y-Github][Y-Github]のリポジトリに、これらをテストするためのコードも用意されているため、詳細はそちらを参照されたい。
 
+### MPIExecutor
+- MPIにノードを追加し、並列実行することが可能。
+
+### Scorer
+- スコア計算を実行できる。
+- pdbデータをparseできる。
+> import denovoutil.rosetta.pdb as PDB
+> m2 = PDB.parse('2cbh.pdb')
+- parseしたpdbデータについて、スコア関数を指定し、スコア計算を実行できる。
+> import denovoutil.rosetta.scorer as Scorer
+> scorer = Scorer.create()
+> sc1 = scorer.run(m2, 'ref2015')
+> sc2 = scorer.run(m2, 'ref2015_cart')
 
 ## インストール
 
