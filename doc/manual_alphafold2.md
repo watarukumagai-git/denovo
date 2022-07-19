@@ -58,6 +58,17 @@
     - 親フォルダ内でoutputフォルダを作成し、そこに各jobのスコアファイルを結合したデータフレーム（score_AF.csv）を保存する。
         - clm = ['sample_no', 'max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank', 'parent']
 
+### 参照pdbのコピー
+- copy_refer_pdb.pyが参照pdbコピースクリプト。
+- step1: config_copy_refer_pdb.iniから、各構造ファイルを集約している親フォルダ名（parent）とpdbデータのコピー元フォルダを指定する。
+    - 下記のように、ディレクトリ構造を整理する。
+    - work_dir/parent/each_job/job_name.result
+    - enznasにpdbデータを集めていることが多いため、コピー元はenznasに設定する。
+    - ただし、コピー元のdescriptionリストは、現在は既存のスコアファイルから取得している。コピー元のフォルダ内をすべて検索するほうが良いかも。
+- step2: copy_refer_pdb.pyを実行する。
+    - 各jobフォルダ内でreferフォルダを作成し、そこにcopy元から該当するpdbデータをコピーする。
+
+
 [af2anatomia]:https://www.af2anatomia.jp/
 [colabfold_af2]:https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
 [num_recycles]:https://www.af2anatomia.jp/Supplementary/1.10%20Recycling%20iterations
