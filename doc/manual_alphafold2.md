@@ -25,7 +25,7 @@
     - num_recycles: ネットワークの実行回数。[num_recycles解説][num_recycles]を参照。（基本的にはデフォルトでOK）
     - save_to_google_drive: 結果ファイル一式をzipとしてgoogledriveに保存する。（デフォルトはチェックが入っていないため注意）
     - dpi: 保存画像の解像度。（基本的にはデフォルトの200でOK）
-- step5: 上部タブの"Runtime"->"Run all"で、計算を実行する。（30配列について、約10分で計算が完了した）
+- step5: 上部タブの"Runtime"->"Run all"で、計算を実行する。（37配列について、約10分で計算が完了した）
 - step6: 結果が描画される。
     - global pLDDTが5位までの予測構造が出力される。
     - Display 3D structure: 予測構造が描画される。
@@ -35,15 +35,27 @@
 ## 出力ファイルの構造
 - "[job_name].result"というzipファイルとして保存される。
 - config.json: configファイル
-- XX_coverage.png,XX_PAE.png,XX_plddt.png: 画像ファイル
+- XX_coverage.png, XX_PAE.png, XX_plddt.png: 画像ファイル
 - XX_predicted_alinged_error_v1.json: pAE
 - XX_rank_1_model_[num].pdb, XX_rank_2_model_[num].pdb, XX_rank_3_model_[num].pdb, XX_rank_4_model_[num].pdb, XX_rank_5_model_[num].pdb: 1~5位までの予測構造のpdbデータ（全原子の位置座標、plddtスコア）
 - XX_rank_1_model_[num]_scores.json, XX_rank_2_model_[num]_scores.json, XX_rank_3_model_[num]_scores.json, XX_rank_4_model_[num]_scores.json, XX_rank_5_model_[num]_scores.json: 各残基のpAE
 - その他は重要でない
 
 ## pymolによる描画
-- TBD
+- 大量の変異体について実行すると、上記のzipを獲得しても、スコアを集約するのが大変だったり、各構造ファイルについて図を統一できない。
+- このため、colabfoldの出力ファイルについて、これらの作業を簡易的に実行するスクリプトを作成した。
 
+### スコア集約
+- get_score.pyがスコア集約のスクリプト。
+- step1: config_get_score.iniから、各構造ファイルを集約している親フォルダ名（parent）を指定する。
+    - 下記のように、ディレクトリ構造を整理する。
+    - work_dir/parent/each_job/job_name.result
+- step2: get_score.pyを実行する。
+    - parent以下の全てのフォルダ名を取得し、各jobに対してスコアを取得する。
+    - 各jobフォルダ内でoutputフォルダを作成し、そこに下記スコアのデータフレーム（score.csv）を保存する。
+> clm = ['max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank']
+    - 親フォルダに、各jobフォルダのスコアファイルを結合したデータフレーム（score_AF.csv）を保存する。
+> clm = ['sample_no', 'max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank', 'parent']
 
 [af2anatomia]:https://www.af2anatomia.jp/
 [colabfold_af2]:https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
