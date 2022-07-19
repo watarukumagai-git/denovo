@@ -51,11 +51,12 @@
     - 下記のように、ディレクトリ構造を整理する。
     - work_dir/parent/each_job/job_name.result
 - step2: get_score.pyを実行する。
-    - parent以下の全てのフォルダ名を取得し、各jobに対してスコアを取得する。
+    - parent以下の全てのフォルダ名を取得し、各jobに対してスコアを取得・集約する。
+- step3: 結果が出力される。
     - 各jobフォルダ内でoutputフォルダを作成し、そこに下記スコアのデータフレーム（score.csv）を保存する。
-> clm = ['max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank']
-    - 親フォルダに、各jobフォルダのスコアファイルを結合したデータフレーム（score_AF.csv）を保存する。
-> clm = ['sample_no', 'max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank', 'parent']
+        - clm = ['max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank']
+    - 親フォルダ内でoutputフォルダを作成し、そこに各jobのスコアファイルを結合したデータフレーム（score_AF.csv）を保存する。
+        - clm = ['sample_no', 'max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank', 'parent']
 
 [af2anatomia]:https://www.af2anatomia.jp/
 [colabfold_af2]:https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
