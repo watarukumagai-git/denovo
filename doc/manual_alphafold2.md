@@ -16,7 +16,7 @@
 - step1: [GoogleColaboratory][colabfold_af2]（単量体、MMseqs2）を開く。
 - step2: Input protein sequenceを設定する。
     - query_sequence: 構造予測したいアミノ酸配列。
-    - jobname: ワーク名。（単純に実行毎の結果を区別するための名称）
+    - jobname: job名。空だと、ランダムな文字列が割り当てられる。（単純に実行毎の結果を区別するための名称）
     - use_amber: amberによるrelaxを使用する？（正確な意味が判明していないが、チェックしなくても動作する）
     - use_templete: テンプレートを使用する場合はpdb名を入力。使用しない場合は"none"を入力。
 - step3: 必要であれば、MSA_optionsを入力する。（基本的にはデフォルトでOK）
@@ -33,8 +33,13 @@
 - step7: zipファイルのダウンロードのポップアップが出現する。"save_to_google_drive"にチェックを入れていた場合、zipファイルがdriveに保存される。
 
 ## 出力ファイルの構造
-- pdb
-- TBD
+- "[job_name].result"というzipファイルとして保存される。
+- config.json: configファイル
+- XX_coverage.png,XX_PAE.png,XX_plddt.png: 画像ファイル
+- XX_predicted_alinged_error_v1.json: pAE
+- XX_rank_1_model_[num].pdb, XX_rank_2_model_[num].pdb, XX_rank_3_model_[num].pdb, XX_rank_4_model_[num].pdb, XX_rank_5_model_[num].pdb: 1~5位までの予測構造のpdbデータ（全原子の位置座標、plddtスコア）
+- XX_rank_1_model_[num]_scores.json, XX_rank_2_model_[num]_scores.json, XX_rank_3_model_[num]_scores.json, XX_rank_4_model_[num]_scores.json, XX_rank_5_model_[num]_scores.json: 各残基のpAE
+- その他は重要でない
 
 ## pymolによる描画
 - TBD
