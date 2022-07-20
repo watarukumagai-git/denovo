@@ -49,9 +49,10 @@
 - get_score.pyがスコア集約のスクリプト。
 - step1: config_get_score.iniから、各構造ファイルを集約している親フォルダ名（parent）を指定する。
     - 下記のように、ディレクトリ構造を整理する。
-    - work_dir/parent/each_job/job_name.result
+        - work_dir/parent/each_job/job_name.result.zip
 - step2: get_score.pyを実行する。
     - parent以下の全てのフォルダ名を取得し、各jobに対してスコアを取得・集約する。
+    - zipファイルを解凍していない場合、自動的に解凍してjob_name.resultディレクトリを生成する。解凍済なら、そのディレクトリを参照する。
 - step3: 結果が出力される。
     - 各jobフォルダ内でoutputフォルダを作成し、そこに下記スコアのデータフレーム（score.csv）を保存する。
         - clm = ['max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank']
