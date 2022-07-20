@@ -74,10 +74,13 @@
 ### pymol上の立体構造描画
 - get_pose_pymol.pyがpymol上の立体構造描画スクリプト。
 - step1: config_copy_refer_pdb.iniから、各構造ファイルを集約している親フォルダ名（parent）とpdbデータのコピー元フォルダ（copy_root）を指定する。
+    - 下記のように、ディレクトリ構造を整理する。
+    - work_dir/parent/each_job/job_name.result
 - step2: pymolを開き、pymolのコマンドライン上で下記を実行する。
 ```
 run [dir_name]/get_pose_pymol.py
 ```
+- step3: 
 
 [af2anatomia]:https://www.af2anatomia.jp/
 [colabfold_af2]:https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
