@@ -61,14 +61,23 @@
 
 ### 参照pdbのコピー
 - copy_refer_pdb.pyが参照pdbコピースクリプト。
-- step1: config_copy_refer_pdb.iniから、各構造ファイルを集約している親フォルダ名（parent）とpdbデータのコピー元フォルダを指定する。
+- step1: config_copy_refer_pdb.iniから、各構造ファイルを集約している親フォルダ名（parent）とpdbデータのコピー元フォルダ（copy_root）を指定する。
     - 下記のように、ディレクトリ構造を整理する。
     - work_dir/parent/each_job/job_name.result
     - enznasにpdbデータを集めていることが多いため、コピー元はenznasに設定する。
-    - ただし、コピー元のdescriptionリストは、現在は既存のスコアファイルから取得している。コピー元のフォルダ内をすべて検索するほうが良いかも。
+    - TBD: ただし、コピー元のdescriptionリスト（filepath_pdb_list）は、現在は既存のスコアファイルを指定し、その中から取得している。コピー元のフォルダ内をすべて検索するほうが良いかも。
 - step2: copy_refer_pdb.pyを実行する。
-    - 各jobフォルダ内でreferフォルダを作成し、そこにcopy元から該当するpdbデータをコピーする。
+    - parent以下の全てのフォルダ名を取得し、各jobフォルダ内でreferフォルダを作成する。
+- step3: 結果が出力される。
+    - 各jobのreferフォルダに、copy元から該当するpdbデータをコピーする。
 
+### pymol上の立体構造描画
+- get_pose_pymol.pyがpymol上の立体構造描画スクリプト。
+- step1: config_copy_refer_pdb.iniから、各構造ファイルを集約している親フォルダ名（parent）とpdbデータのコピー元フォルダ（copy_root）を指定する。
+- step2: pymolを開き、pymolのコマンドライン上で下記を実行する。
+```
+run [dir_name]/get_pose_pymol.py
+```
 
 [af2anatomia]:https://www.af2anatomia.jp/
 [colabfold_af2]:https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
