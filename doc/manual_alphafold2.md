@@ -44,44 +44,64 @@
 ## pymolによる描画
 - 大量の変異体について実行すると、上記のzipを獲得しても、スコアを集約するのが大変だったり、各構造ファイルについて図を統一できない。
 - このため、colabfoldの出力ファイルについて、これらの作業を簡易的に実行するスクリプトを作成した。
+    - スコア集約、参照pdbのコピー、pymol上の立体構造の描画
 
 ### スコア集約
 - get_score.pyがスコア集約のスクリプト。
 - step1: config_get_score.iniから、各構造ファイルを集約している親フォルダ名（parent）を指定する。
     - 下記のように、ディレクトリ構造を整理する。
-        - work_dir/parent/each_job/job_name.result.zip
+
+```
+work_dir/parent/each_job/job_name.result.zip
+```
+
 - step2: get_score.pyを実行する。
     - parent以下の全てのフォルダ名を取得し、各jobに対してスコアを取得・集約する。
     - zipファイルを解凍していない場合、自動的に解凍してjob_name.resultディレクトリを生成する。解凍済なら、そのディレクトリを参照する。
 - step3: 結果が出力される。
     - 各jobフォルダ内でoutputフォルダを作成し、そこに下記スコアのデータフレーム（score.csv）を保存する。
-        - clm = ['max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank']
     - 親フォルダ内でoutputフォルダを作成し、そこに各jobのスコアファイルを結合したデータフレーム（score_AF.csv）を保存する。
-        - clm = ['sample_no', 'max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank', 'parent']
+
+```
+score_clm = ['max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank']
+score_AF_clm = ['sample_no', 'max_pae', 'ptm', 'pLDDT_mean', 'pAC', 'model_num', 'rank', 'parent']
+```
 
 ### 参照pdbのコピー
 - copy_refer_pdb.pyが参照pdbコピースクリプト。
 - step1: config_copy_refer_pdb.iniから、各構造ファイルを集約している親フォルダ名（parent）とpdbデータのコピー元フォルダ（copy_root）を指定する。
     - 下記のように、ディレクトリ構造を整理する。
-    - work_dir/parent/each_job/job_name.result
-    - enznasにpdbデータを集めていることが多いため、コピー元はenznasに設定する。
+
+```
+work_dir/parent/each_job
+```
+
+- enznasにpdbデータを集めていることが多いため、コピー元はenznasに設定する。
     - TBD: ただし、コピー元のdescriptionリスト（filepath_pdb_list）は、現在は既存のスコアファイルを指定し、その中から取得している。コピー元のフォルダ内をすべて検索するほうが良いかも。
 - step2: copy_refer_pdb.pyを実行する。
     - parent以下の全てのフォルダ名を取得し、各jobフォルダ内でreferフォルダを作成する。
+    - 各jobフォルダ内でreferフォルダ（コピー先）とdescriptionリスト（コピー元）の対応関係を割り当てる。
 - step3: 結果が出力される。
     - 各jobのreferフォルダに、copy元から該当するpdbデータをコピーする。
 
+
 ### pymol上の立体構造描画
 - get_pose_pymol.pyがpymol上の立体構造描画スクリプト。
-- step1: config_copy_refer_pdb.iniから、各構造ファイルを集約している親フォルダ名（parent）とpdbデータのコピー元フォルダ（copy_root）を指定する。
+- step1: pymolをインストールする。
+- step2: config_get_pose_pymol.iniから、各構造ファイルを集約している親フォルダ名（parent）を指定する。
     - 下記のように、ディレクトリ構造を整理する。
-    - work_dir/parent/each_job/job_name.result
-- step2: pymolを開き、pymolのコマンドライン上で下記を実行する。
+
 ```
-run [dir_name]/get_pose_pymol.py
+work_dir/parent/each_job/job_name.result
 ```
-- step3: 
+
+- step3: get_pose_pymol.pyを実行する。
+    - pymolコマンドが自動的に実行される。
+        - pymolコマンドについては[pymolwiki][pymol_command]を参照されたい。
+    -
+- step4: 
 
 [af2anatomia]:https://www.af2anatomia.jp/
 [colabfold_af2]:https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
 [num_recycles]:https://www.af2anatomia.jp/Supplementary/1.10%20Recycling%20iterations
+[pymol_command]:https://pymolwiki.org/index.php/Category:Commands
